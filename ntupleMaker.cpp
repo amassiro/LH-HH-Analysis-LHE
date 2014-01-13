@@ -56,6 +56,14 @@ class myTree {
   TTree* tree;
   int njet_;
   float jetpt1_;
+  float jetpt2_;
+  float jeteta1_;
+  float jeteta2_;
+  float jetphi1_;
+  float jetphi2_;
+  float jetmass1_;
+  float jetmass2_;
+
 
   float hbb_pt_;
   float hbb_phi_;
@@ -63,6 +71,7 @@ class myTree {
 
   void fillTree (std::string fileNameLHE);
   void Write(TFile& out);
+  void Init();
 
 };
 
@@ -72,7 +81,26 @@ myTree::myTree(){
 
  tree->Branch("njet",&njet_,"njet/I");
  tree->Branch("jetpt1",&jetpt1_,"jetpt1/F");
+ tree->Branch("jeteta1",&jeteta1_,"jeteta1/F");
+ tree->Branch("jetphi1",&jetphi1_,"jetphi1/F");
+ tree->Branch("jetmass1",&jetmass1_,"jetmass1/F");
 }
+
+void myTree::Init(){
+ jetpt1_ = -99;
+ jeteta1_ = -99;
+ jetphi1_ = -99;
+ jetmass1_ = -99;
+
+ jetpt2_ = -99;
+ jeteta2_ = -99;
+ jetphi2_ = -99;
+ jetmass2_ = -99;
+
+ njet_ = 0;
+
+}
+
 
 void myTree::fillTree(std::string fileNameLHE){
  std::ifstream ifs (fileNameLHE.c_str ()) ;
@@ -165,14 +193,24 @@ void myTree::fillTree(std::string fileNameLHE){
 //   TLorentzVector missingEnergy = v_f_neutrinos.at (0) + v_f_neutrinos.at (1) ;
 //   TLorentzVector dilepton_plus_dineutrinos = v_f_leptons.at (0) + v_f_leptons.at (1) + v_f_neutrinos.at (0) + v_f_neutrinos.at (1) ;
 
-// the sum pf the two quarks
-//   float jetpt1 = -99;
-//   if (v_f_quarks.size()>0) jetpt1 = v_f_quarks.at (0).Pt ();
-//   float jetpt2 = -99;
-//   if (v_f_quarks.size()>1) jetpt2 = v_f_quarks.at (1).Pt ();
 
-  jetpt1_ = v_f_quarks.at (0).Pt ();
-  njet_ = 0;
+  //---- fill the ntuple
+  Init();
+// the sum pf the two quarks
+
+  if (v_f_quarks.size()>0) {
+   jetpt1_ = v_f_quarks.at (0).Pt ();
+   jeteta1_ = v_f_quarks.at (0).Eta ();
+   jetphi1_ = v_f_quarks.at (0).Phi ();
+   jetmass1_ = v_f_quarks.at (0).M ();
+  }
+  if (v_f_quarks.size()>1) {
+   jetpt2_ = v_f_quarks.at (1).Pt ();
+   jeteta2_ = v_f_quarks.at (1).Eta ();
+   jetphi2_ = v_f_quarks.at (1).Phi ();
+   jetmass2_ = v_f_quarks.at (1).M ();
+  }
+
   for (unsigned int iq = 0; iq < v_f_quarks.size(); iq++){
    if (v_f_quarks.at(iq).Pt () > 30) njet_++;
   }
@@ -194,12 +232,12 @@ int main (int argc, char **argv) {
  std::cout << " Input  LHE  =" << argv[1] << std::endl;
  std::cout << " Output ROOT =" << argv[2] << std::endl;
 
- myTree myT();
-//  myT.fillTree (argv[1]) ;
+ myTree myT;
+ myT.fillTree (std::string(argv[1])) ;
 
  TFile output (argv[2], "recreate") ;
  output.cd() ;
-//  myT.Write(output);
+ myT.Write(output);
  output.Close();
 
 }
