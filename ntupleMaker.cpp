@@ -87,10 +87,11 @@ class myTree {
   float jetphi6_;
   float jetmass6_;
 
-
+  // hbb
   float hbb_pt_;
   float hbb_phi_;
   float hbb_eta_;
+  float hbb_mass_;
 
   // hww
   float pt1_;
@@ -103,6 +104,20 @@ class myTree {
   float phi2_;
   float mass2_;
 
+  float met_pt_;
+  float met_phi_;
+  float met_eta_;
+
+  float hww_pt_;
+  float hww_eta_;
+  float hww_phi_;
+  float hww_mass_;
+
+  float mll_;
+  float ptll_;
+
+
+
   void fillTree (std::string fileNameLHE);
   void Write(TFile& out);
   void Init();
@@ -113,6 +128,13 @@ class myTree {
 myTree::myTree(){
  tree = new TTree("tree","tree");
 
+ //---- hbb
+ tree->Branch("hbb_pt_",&hbb_pt_,"hbb_pt_/F");
+ tree->Branch("hbb_eta_",&hbb_eta_,"hbb_eta_/F");
+ tree->Branch("hbb_phi_",&hbb_phi_,"hbb_phi_/F");
+ tree->Branch("hbb_mass_",&hbb_mass_,"hbb_mass_/F");
+
+ //---- hww
  tree->Branch("pt1",&pt1_,"pt1/F");
  tree->Branch("eta1",&eta1_,"eta1/F");
  tree->Branch("phi1",&phi1_,"phi1/F");
@@ -123,7 +145,20 @@ myTree::myTree(){
  tree->Branch("phi2",&phi2_,"phi2/F");
  tree->Branch("mass2",&mass2_,"mass2/F");
 
+ tree->Branch("met_pt",&met_pt_,"met_pt/F");
+ tree->Branch("met_phi",&met_phi_,"met_phi/F");
+ tree->Branch("met_eta",&met_eta_,"met_eta/F");
 
+ tree->Branch("mll",&mll_,"mll/F");
+ tree->Branch("ptll",&ptll_,"ptll/F");
+
+ tree->Branch("hww_pt_",&hww_pt_,"hww_pt_/F");
+ tree->Branch("hww_eta_",&hww_eta_,"hww_eta_/F");
+ tree->Branch("hww_phi_",&hww_phi_,"hww_phi_/F");
+ tree->Branch("hww_mass_",&hww_mass_,"hww_mass_/F");
+
+
+ //---- jets
  tree->Branch("njet",&njet_,"njet/I");
 
  tree->Branch("jetpt1",&jetpt1_,"jetpt1/F");
@@ -159,6 +194,34 @@ myTree::myTree(){
 }
 
 void myTree::Init(){
+
+ hbb_pt_ = -99;
+ hbb_eta_ = -99;
+ hbb_phi_ = -99;
+ hbb_mass_ = -99;
+
+ hww_pt_ = -99;
+ hww_eta_ = -99;
+ hww_phi_ = -99;
+ hww_mass_ = -99;
+
+ mll_ = -99;
+ ptll_ = -99;
+ met_pt_ = -99;
+ met_phi_ = -99;
+ met_eta_ = -99;
+
+ pt1_ = -99;
+ eta1_ = -99;
+ phi1_ = -99;
+ mass1_ = -99;
+
+ pt2_ = -99;
+ eta2_ = -99;
+ phi2_ = -99;
+ mass2_ = -99;
+
+ //---- jets
  jetpt1_ = -99;
  jeteta1_ = -99;
  jetphi1_ = -99;
@@ -209,6 +272,9 @@ void myTree::fillTree(std::string fileNameLHE){
   ieve++;
   if (ieve % 10000 == 0) std::cout << "event " << ieve << "\n" ;
 
+  //---- initialize variables in tree
+  Init();
+
   TLorentzVector HiggsA, HiggsB;
   int iPartHiggs = -1;
 
@@ -230,6 +296,10 @@ void myTree::fillTree(std::string fileNameLHE){
     reader.hepeup.PUP.at (iPart).at (2), // pz
     reader.hepeup.PUP.at (iPart).at (3) // E
                       );
+    hbb_pt_   = HiggsA.Pt();
+    hbb_eta_  = HiggsA.Eta();
+    hbb_phi_  = HiggsA.Phi();
+    hbb_mass_ = HiggsA.M();
    }
 
    if (abs (reader.hepeup.IDUP.at (iPart)) == 35) {
@@ -240,6 +310,10 @@ void myTree::fillTree(std::string fileNameLHE){
     reader.hepeup.PUP.at (iPart).at (2), // pz
     reader.hepeup.PUP.at (iPart).at (3) // E
                        );
+    hww_pt_   = HiggsB.Pt();
+    hww_eta_  = HiggsB.Eta();
+    hww_phi_  = HiggsB.Phi();
+    hww_mass_ = HiggsB.M();
    }
 
    // outgoing particles
@@ -282,12 +356,10 @@ void myTree::fillTree(std::string fileNameLHE){
   sort (v_f_leptons.rbegin (), v_f_leptons.rend (), ptsort ()) ;
 
 //   TLorentzVector diLepton = v_f_leptons.at (0) + v_f_leptons.at (1) ;
-//   TLorentzVector missingEnergy = v_f_neutrinos.at (0) + v_f_neutrinos.at (1) ;
 //   TLorentzVector dilepton_plus_dineutrinos = v_f_leptons.at (0) + v_f_leptons.at (1) + v_f_neutrinos.at (0) + v_f_neutrinos.at (1) ;
 
 
   //---- fill the ntuple
-  Init();
 
   if (v_f_quarks.size()>0) {
    jetpt1_ = v_f_quarks.at (0).Pt ();
@@ -346,8 +418,18 @@ void myTree::fillTree(std::string fileNameLHE){
    eta2_ = v_f_leptons.at (1).Eta ();
    phi2_ = v_f_leptons.at (1).Phi ();
    mass2_ = v_f_leptons.at (1).M ();
+   mll_  = (v_f_leptons.at (0) + v_f_leptons.at (1)).M();
+   ptll_ = (v_f_leptons.at (0) + v_f_leptons.at (1)).Pt();
   }
 
+  TLorentzVector missingEnergy;
+  for (unsigned int iv = 0; iv < v_f_neutrinos.size(); iv++){
+   missingEnergy = missingEnergy + v_f_neutrinos.at(iv);
+  }
+
+  met_pt_  = missingEnergy.Pt();
+  met_phi_ = missingEnergy.Phi();
+  met_eta_ = missingEnergy.Eta();
 
   tree->Fill();
  }
