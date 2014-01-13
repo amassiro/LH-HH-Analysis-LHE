@@ -54,20 +54,54 @@ class myTree {
   ~myTree() {};
 
   TTree* tree;
+
   int njet_;
+
   float jetpt1_;
-  float jetpt2_;
   float jeteta1_;
-  float jeteta2_;
   float jetphi1_;
-  float jetphi2_;
   float jetmass1_;
+
+  float jetpt2_;
+  float jeteta2_;
+  float jetphi2_;
   float jetmass2_;
+
+  float jetpt3_;
+  float jeteta3_;
+  float jetphi3_;
+  float jetmass3_;
+
+  float jetpt4_;
+  float jeteta4_;
+  float jetphi4_;
+  float jetmass4_;
+
+  float jetpt5_;
+  float jeteta5_;
+  float jetphi5_;
+  float jetmass5_;
+
+  float jetpt6_;
+  float jeteta6_;
+  float jetphi6_;
+  float jetmass6_;
 
 
   float hbb_pt_;
   float hbb_phi_;
   float hbb_eta_;
+
+  // hww
+  float pt1_;
+  float eta1_;
+  float phi1_;
+  float mass1_;
+
+  float pt2_;
+  float eta2_;
+  float phi2_;
+  float mass2_;
 
   void fillTree (std::string fileNameLHE);
   void Write(TFile& out);
@@ -79,11 +113,49 @@ class myTree {
 myTree::myTree(){
  tree = new TTree("tree","tree");
 
+ tree->Branch("pt1",&pt1_,"pt1/F");
+ tree->Branch("eta1",&eta1_,"eta1/F");
+ tree->Branch("phi1",&phi1_,"phi1/F");
+ tree->Branch("mass1",&mass1_,"mass1/F");
+
+ tree->Branch("pt2",&pt2_,"pt2/F");
+ tree->Branch("eta2",&eta2_,"eta2/F");
+ tree->Branch("phi2",&phi2_,"phi2/F");
+ tree->Branch("mass2",&mass2_,"mass2/F");
+
+
  tree->Branch("njet",&njet_,"njet/I");
+
  tree->Branch("jetpt1",&jetpt1_,"jetpt1/F");
  tree->Branch("jeteta1",&jeteta1_,"jeteta1/F");
  tree->Branch("jetphi1",&jetphi1_,"jetphi1/F");
  tree->Branch("jetmass1",&jetmass1_,"jetmass1/F");
+
+ tree->Branch("jetpt2",&jetpt2_,"jetpt2/F");
+ tree->Branch("jeteta2",&jeteta2_,"jeteta2/F");
+ tree->Branch("jetphi2",&jetphi2_,"jetphi2/F");
+ tree->Branch("jetmass2",&jetmass2_,"jetmass2/F");
+
+ tree->Branch("jetpt3",&jetpt3_,"jetpt3/F");
+ tree->Branch("jeteta3",&jeteta3_,"jeteta3/F");
+ tree->Branch("jetphi3",&jetphi3_,"jetphi3/F");
+ tree->Branch("jetmass3",&jetmass3_,"jetmass3/F");
+
+ tree->Branch("jetpt4",&jetpt4_,"jetpt4/F");
+ tree->Branch("jeteta4",&jeteta4_,"jeteta4/F");
+ tree->Branch("jetphi4",&jetphi4_,"jetphi4/F");
+ tree->Branch("jetmass4",&jetmass4_,"jetmass4/F");
+
+ tree->Branch("jetpt5",&jetpt5_,"jetpt5/F");
+ tree->Branch("jeteta5",&jeteta5_,"jeteta5/F");
+ tree->Branch("jetphi5",&jetphi5_,"jetphi5/F");
+ tree->Branch("jetmass5",&jetmass5_,"jetmass5/F");
+
+ tree->Branch("jetpt6",&jetpt6_,"jetpt6/F");
+ tree->Branch("jeteta6",&jeteta6_,"jeteta6/F");
+ tree->Branch("jetphi6",&jetphi6_,"jetphi6/F");
+ tree->Branch("jetmass6",&jetmass6_,"jetmass6/F");
+
 }
 
 void myTree::Init(){
@@ -96,6 +168,26 @@ void myTree::Init(){
  jeteta2_ = -99;
  jetphi2_ = -99;
  jetmass2_ = -99;
+
+ jetpt3_ = -99;
+ jeteta3_ = -99;
+ jetphi3_ = -99;
+ jetmass3_ = -99;
+
+ jetpt4_ = -99;
+ jeteta4_ = -99;
+ jetphi4_ = -99;
+ jetmass4_ = -99;
+
+ jetpt5_ = -99;
+ jeteta5_ = -99;
+ jetphi5_ = -99;
+ jetmass5_ = -99;
+
+ jetpt6_ = -99;
+ jeteta6_ = -99;
+ jetphi6_ = -99;
+ jetmass6_ = -99;
 
  njet_ = 0;
 
@@ -196,7 +288,6 @@ void myTree::fillTree(std::string fileNameLHE){
 
   //---- fill the ntuple
   Init();
-// the sum pf the two quarks
 
   if (v_f_quarks.size()>0) {
    jetpt1_ = v_f_quarks.at (0).Pt ();
@@ -211,9 +302,53 @@ void myTree::fillTree(std::string fileNameLHE){
    jetmass2_ = v_f_quarks.at (1).M ();
   }
 
+  if (v_f_quarks.size()>2) {
+   jetpt3_ = v_f_quarks.at (2).Pt ();
+   jeteta3_ = v_f_quarks.at (2).Eta ();
+   jetphi3_ = v_f_quarks.at (2).Phi ();
+   jetmass3_ = v_f_quarks.at (2).M ();
+  }
+
+  if (v_f_quarks.size()>3) {
+   jetpt4_ = v_f_quarks.at (3).Pt ();
+   jeteta4_ = v_f_quarks.at (3).Eta ();
+   jetphi4_ = v_f_quarks.at (3).Phi ();
+   jetmass4_ = v_f_quarks.at (3).M ();
+  }
+
+  if (v_f_quarks.size()>4) {
+   jetpt5_ = v_f_quarks.at (4).Pt ();
+   jeteta5_ = v_f_quarks.at (4).Eta ();
+   jetphi5_ = v_f_quarks.at (4).Phi ();
+   jetmass5_ = v_f_quarks.at (4).M ();
+  }
+
+  if (v_f_quarks.size()>5) {
+   jetpt6_ = v_f_quarks.at (5).Pt ();
+   jeteta6_ = v_f_quarks.at (5).Eta ();
+   jetphi6_ = v_f_quarks.at (5).Phi ();
+   jetmass6_ = v_f_quarks.at (5).M ();
+  }
+
   for (unsigned int iq = 0; iq < v_f_quarks.size(); iq++){
    if (v_f_quarks.at(iq).Pt () > 30) njet_++;
   }
+
+  //---- hww
+  if (v_f_leptons.size()>0) {
+   pt1_ = v_f_leptons.at (0).Pt ();
+   eta1_ = v_f_leptons.at (0).Eta ();
+   phi1_ = v_f_leptons.at (0).Phi ();
+   mass1_ = v_f_leptons.at (0).M ();
+  }
+  if (v_f_leptons.size()>1) {
+   pt2_ = v_f_leptons.at (1).Pt ();
+   eta2_ = v_f_leptons.at (1).Eta ();
+   phi2_ = v_f_leptons.at (1).Phi ();
+   mass2_ = v_f_leptons.at (1).M ();
+  }
+
+
   tree->Fill();
  }
 }
