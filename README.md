@@ -21,3 +21,6 @@ Fill in a tree the most important variables:
     haa specific
 
 
+Background in MG5
+
+    generate p p > t t~ j j , (t > W+ b, W+ > l+ vl),  (t~ > w- b~, W- > l- vl~)
