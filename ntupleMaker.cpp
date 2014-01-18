@@ -87,6 +87,27 @@ class myTree {
   float jetphi6_;
   float jetmass6_;
 
+
+  float bjetpt1_;
+  float bjeteta1_;
+  float bjetphi1_;
+  float bjetmass1_;
+
+  float bjetpt2_;
+  float bjeteta2_;
+  float bjetphi2_;
+  float bjetmass2_;
+
+  float bjetpt3_;
+  float bjeteta3_;
+  float bjetphi3_;
+  float bjetmass3_;
+
+  float bjetpt4_;
+  float bjeteta4_;
+  float bjetphi4_;
+  float bjetmass4_;
+
   // hbb
   float hbb_pt_;
   float hbb_phi_;
@@ -191,6 +212,26 @@ myTree::myTree(){
  tree->Branch("jetphi6",&jetphi6_,"jetphi6/F");
  tree->Branch("jetmass6",&jetmass6_,"jetmass6/F");
 
+ tree->Branch("bjetpt1",&bjetpt1_,"bjetpt1/F");
+ tree->Branch("bjeteta1",&bjeteta1_,"bjeteta1/F");
+ tree->Branch("bjetphi1",&bjetphi1_,"bjetphi1/F");
+ tree->Branch("bjetmass1",&bjetmass1_,"bjetmass1/F");
+
+ tree->Branch("bjetpt2",&bjetpt2_,"bjetpt2/F");
+ tree->Branch("bjeteta2",&bjeteta2_,"bjeteta2/F");
+ tree->Branch("bjetphi2",&bjetphi2_,"bjetphi2/F");
+ tree->Branch("bjetmass2",&bjetmass2_,"bjetmass2/F");
+
+ tree->Branch("bjetpt3",&bjetpt3_,"bjetpt3/F");
+ tree->Branch("bjeteta3",&bjeteta3_,"bjeteta3/F");
+ tree->Branch("bjetphi3",&bjetphi3_,"bjetphi3/F");
+ tree->Branch("bjetmass3",&bjetmass3_,"bjetmass3/F");
+
+ tree->Branch("bjetpt4",&bjetpt4_,"bjetpt4/F");
+ tree->Branch("bjeteta4",&bjeteta4_,"bjeteta4/F");
+ tree->Branch("bjetphi4",&bjetphi4_,"bjetphi4/F");
+ tree->Branch("bjetmass4",&bjetmass4_,"bjetmass4/F");
+
 }
 
 void myTree::Init(){
@@ -280,6 +321,7 @@ void myTree::fillTree(std::string fileNameLHE){
 
   std::vector<int> finalJets ;
   std::vector<TLorentzVector> v_f_quarks ;
+  std::vector<TLorentzVector> v_f_bquarks ;
   std::vector<TLorentzVector> v_f_leptons ;
   std::vector<TLorentzVector> v_f_neutrinos ;
 
@@ -328,6 +370,9 @@ void myTree::fillTree(std::string fileNameLHE){
      reader.hepeup.PUP.at (iPart).at (3) // E
                           ) ;
      v_f_quarks.push_back (dummy) ;
+     if (abs (reader.hepeup.IDUP.at (iPart)) == 5) {
+      v_f_bquarks.push_back (dummy) ;
+     }
     } // quarks
     else if (abs (reader.hepeup.IDUP.at (iPart)) == 11 || abs (reader.hepeup.IDUP.at (iPart)) == 13 || abs (reader.hepeup.IDUP.at (iPart)) == 15) {  // e = 11,   mu = 13,   tau = 15
      TLorentzVector dummy (
@@ -400,6 +445,33 @@ void myTree::fillTree(std::string fileNameLHE){
    jeteta6_ = v_f_quarks.at (5).Eta ();
    jetphi6_ = v_f_quarks.at (5).Phi ();
    jetmass6_ = v_f_quarks.at (5).M ();
+  }
+
+  if (v_f_bquarks.size()>0) {
+   bjetpt1_ = v_f_bquarks.at (0).Pt ();
+   bjeteta1_ = v_f_bquarks.at (0).Eta ();
+   bjetphi1_ = v_f_bquarks.at (0).Phi ();
+   bjetmass1_ = v_f_bquarks.at (0).M ();
+  }
+  if (v_f_bquarks.size()>1) {
+   bjetpt2_ = v_f_bquarks.at (1).Pt ();
+   bjeteta2_ = v_f_bquarks.at (1).Eta ();
+   bjetphi2_ = v_f_bquarks.at (1).Phi ();
+   bjetmass2_ = v_f_bquarks.at (1).M ();
+  }
+
+  if (v_f_bquarks.size()>2) {
+   bjetpt3_ = v_f_bquarks.at (2).Pt ();
+   bjeteta3_ = v_f_bquarks.at (2).Eta ();
+   bjetphi3_ = v_f_bquarks.at (2).Phi ();
+   bjetmass3_ = v_f_bquarks.at (2).M ();
+  }
+
+  if (v_f_bquarks.size()>3) {
+   bjetpt4_ = v_f_bquarks.at (3).Pt ();
+   bjeteta4_ = v_f_bquarks.at (3).Eta ();
+   bjetphi4_ = v_f_bquarks.at (3).Phi ();
+   bjetmass4_ = v_f_bquarks.at (3).M ();
   }
 
   for (unsigned int iq = 0; iq < v_f_quarks.size(); iq++){
