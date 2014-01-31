@@ -40,8 +40,14 @@ Lxbatch:
     is 2nw too small???
 
 
+Background in MG5 without additional jets
 
 
+    generate p p > t t~ j , (t > W+ b, W+ > l+ vl),  (t~ > w- b~, W- > l- vl~)
+    generate p p > w+ w- b b~ j
 
+
+    generate p p > t t~ , (t > W+ b, W+ > l+ vl),  (t~ > w- b~, W- > l- vl~)
+    generate p p > w+ w- b b~
 
 
