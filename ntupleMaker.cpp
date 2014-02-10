@@ -129,14 +129,17 @@ class myTree {
   float met_phi_;
   float met_eta_;
 
-  float hww_pt_;
-  float hww_eta_;
-  float hww_phi_;
-  float hww_mass_;
+  float hww_gen_pt_;
+  float hww_gen_eta_;
+  float hww_gen_phi_;
+  float hww_gen_mass_;
 
+  float hww_pt_;
+  float hww_mt_;
+  float hww_eta_m_;
+  float hww_eta_p_;
   float mll_;
   float ptll_;
-
 
 
   void fillTree (std::string fileNameLHE);
@@ -173,10 +176,15 @@ myTree::myTree(){
  tree->Branch("mll",&mll_,"mll/F");
  tree->Branch("ptll",&ptll_,"ptll/F");
 
- tree->Branch("hww_pt_",&hww_pt_,"hww_pt_/F");
- tree->Branch("hww_eta_",&hww_eta_,"hww_eta_/F");
- tree->Branch("hww_phi_",&hww_phi_,"hww_phi_/F");
- tree->Branch("hww_mass_",&hww_mass_,"hww_mass_/F");
+ tree->Branch("hww_gen_pt",&hww_gen_pt_,"hww_gen_pt/F");
+ tree->Branch("hww_gen_eta",&hww_gen_eta_,"hww_gen_eta/F");
+ tree->Branch("hww_gen_phi",&hww_gen_phi_,"hww_gen_phi/F");
+ tree->Branch("hww_gen_mass",&hww_gen_mass_,"hww_gen_mass/F");
+
+ tree->Branch("hww_pt",&hww_pt_,"hww_pt/F");
+ tree->Branch("hww_mt",&hww_mt_,"hww_mt/F");
+ tree->Branch("hww_eta_m",&hww_eta_m_,"hww_eta_m/F");
+ tree->Branch("hww_eta_p",&hww_eta_p_,"hww_eta_p/F");
 
 
  //---- jets
@@ -241,10 +249,15 @@ void myTree::Init(){
  hbb_phi_ = -99;
  hbb_mass_ = -99;
 
+ hww_gen_pt_ = -99;
+ hww_gen_eta_ = -99;
+ hww_gen_mass_ = -99;
+
  hww_pt_ = -99;
- hww_eta_ = -99;
- hww_phi_ = -99;
- hww_mass_ = -99;
+ hww_mt_ = -99;
+ hww_eta_m_ = -99;
+ hww_eta_p_ = -99;
+ hww_gen_phi_ = -99;
 
  mll_ = -99;
  ptll_ = -99;
@@ -352,10 +365,10 @@ void myTree::fillTree(std::string fileNameLHE){
     reader.hepeup.PUP.at (iPart).at (2), // pz
     reader.hepeup.PUP.at (iPart).at (3) // E
                        );
-    hww_pt_   = HiggsB.Pt();
-    hww_eta_  = HiggsB.Eta();
-    hww_phi_  = HiggsB.Phi();
-    hww_mass_ = HiggsB.M();
+    hww_gen_pt_   = HiggsB.Pt();
+    hww_gen_eta_  = HiggsB.Eta();
+    hww_gen_phi_  = HiggsB.Phi();
+    hww_gen_mass_ = HiggsB.M();
    }
 
    // outgoing particles
@@ -503,6 +516,34 @@ void myTree::fillTree(std::string fileNameLHE){
   met_phi_ = missingEnergy.Phi();
   met_eta_ = missingEnergy.Eta();
 
+
+  if (v_f_leptons.size()>1) {
+   //--- transverse mass
+   hww_pt_ = (missingEnergy + v_f_leptons.at (0) + v_f_leptons.at (1) ).Pt();
+
+   hww_mt_ = sqrt((v_f_leptons.at (0).Pt() + v_f_leptons.at (1).Pt() + missingEnergy.Pt())*(v_f_leptons.at (0).Pt() + v_f_leptons.at (1).Pt() + missingEnergy.Pt()) - hww_pt_ * hww_pt_);
+  }
+
+//     //---- kinematic fit for eta
+//   float sintheta2 = (hww_pt*hww_pt / (hww.E() * hww.E() - HiggsMass*HiggsMass ));
+//   float sintheta;
+//   if (sintheta2 > 0) sintheta = sqrt (sintheta2);
+//   if (sintheta2 > 0) {
+//    hww_etap = - log (tan ( asin ( sintheta ) / 2. )) ;
+//    hww_etam = + log (tan ( asin ( sintheta ) / 2. )) ;
+//      
+//    hwwp = hww;
+//      //     std::cout << " hww_pt = " << hww_pt << std::endl;
+//    hwwp.SetPtEtaPhiM(hww_pt, hww_etap, hww_phi, HiggsMass);
+//    hwwm.SetPtEtaPhiM(hww_pt, hww_etam, hww_phi, HiggsMass);
+
+   
+   
+   
+
+  
+  
+  
   tree->Fill();
  }
 }
