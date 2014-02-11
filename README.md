@@ -5,7 +5,7 @@ HH analysis just at LHE level
 
 Where:
 
-    /afs/cern.ch/user/a/amassiro/work/LesHouches2013
+    /afs/cern.ch/user/a/amassiro/work/LesHouches2013/LH-HH-Analysis-LHE
 
 
 To compile:
@@ -21,7 +21,16 @@ Fill in a tree the most important variables:
     haa specific
 
 
+Example:
+
+    ./ntupleMaker.exe    /tmp/amassiro/MGraviton_1000_H35H25_WWbb.lhe    /tmp/amassiro/MGraviton_1000_H35H25_WWbb.root
+
+
+
+
+
 Background in MG5
+==================
 
     generate p p > t t~ j j , (t > W+ b, W+ > l+ vl),  (t~ > w- b~, W- > l- vl~)
 
