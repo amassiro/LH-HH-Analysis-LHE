@@ -26,6 +26,7 @@
 #include "Math/Vector3D.h"
 #include "Math/Vector4D.h"
 
+#include "TRandom.h"
 
 struct ptsort: public std::binary_function<TLorentzVector, TLorentzVector, bool> {
  bool operator () (const TLorentzVector & x, const TLorentzVector & y) {
@@ -42,6 +43,30 @@ TLorentzVector buildP (const LHEF::HEPEUP & event, int iPart) {
    event.PUP.at (iPart).at (3) // E
    ) ;
  return dummy ;
+}
+
+
+float SmearMET = 0.10; //---- 10% flat
+float SmearJES = 0.10; //---- 1% flat
+
+
+void smearVectorKeepMass (TLorentzVector& part, float smear){
+ //---- smear = 0.10 ---> 10%
+ float scale = -1;
+ while (scale <= 0) { //---- no negative values!
+  scale = gRandom->Gaus(1,smear);
+ }
+ part.SetXYZM(scale * part.X(), scale * part.Y(), scale * part.Z(), part.M() );
+}
+
+
+void smearVector (TLorentzVector& part, float smear){
+ //---- smear = 0.10 ---> 10%
+ float scale = -1;
+ while (scale <= 0) { //---- no negative values!
+  scale = gRandom->Gaus(1,smear);
+ }
+ part.SetPxPyPzE(scale * part.X(), scale * part.Y(), scale * part.Z(), part.E() );
 }
 
 
@@ -462,7 +487,12 @@ void myTree::fillTree(std::string fileNameLHE){
      reader.hepeup.PUP.at (iPart).at (2), // pz
      reader.hepeup.PUP.at (iPart).at (3) // E
                           ) ;
+
+     smearVectorKeepMass(dummy,SmearJES); //---- smear jet energy scale
+
      v_tlv_quarks.push_back (dummy) ;
+
+
      if (abs (reader.hepeup.IDUP.at (iPart)) == 5) {
       v_tlv_bquarks.push_back (dummy) ;
      }
@@ -616,6 +646,8 @@ void myTree::fillTree(std::string fileNameLHE){
   for (unsigned int iv = 0; iv < v_tlv_neutrinos.size(); iv++){
    missingEnergy = missingEnergy + v_tlv_neutrinos.at(iv);
   }
+
+  smearVector(missingEnergy,SmearMET); //---- smear MET
 
   met_pt_  = missingEnergy.Pt();
   met_phi_ = missingEnergy.Phi();

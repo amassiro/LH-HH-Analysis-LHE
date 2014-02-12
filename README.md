@@ -60,3 +60,19 @@ Background in MG5 without additional jets
     generate p p > w+ w- b b~
 
 
+
+
+Backgrounds
+=======
+
+copy lhe file:
+
+    cp /afs/cern.ch/user/a/amassiro/public/xLHTF/hhwwbb/ttbbjj_100k/unweighted_events.lhe /tmp/amassiro/ttbbjj.lhe
+    ./ntupleMaker.exe    /tmp/amassiro/ttbbjj.lhe    /tmp/amassiro/ttbbjj.root
+
+
+
+
+
+
+
