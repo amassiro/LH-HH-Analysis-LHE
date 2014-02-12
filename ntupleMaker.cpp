@@ -70,6 +70,11 @@ void smearVector (TLorentzVector& part, float smear){
 }
 
 
+void setMassLess (TLorentzVector& part){
+ part.SetXYZM(part.X(), part.Y(), part.Z(), 0 );
+}
+
+
 
 class myParticle: public TLorentzVector {
 
@@ -98,6 +103,9 @@ class myTree {
   TTree* tree;
 
   int njet_;
+
+  float mjj_;
+  float detajj_;
 
   float jetpt1_;
   float jeteta1_;
@@ -272,6 +280,9 @@ myTree::myTree(){
  //---- jets
  tree->Branch("njet",&njet_,"njet/I");
 
+ tree->Branch("mjj",&mjj_,"mjj/F");
+ tree->Branch("detajj",&detajj_,"detajj/F");
+
  tree->Branch("jetpt1",&jetpt1_,"jetpt1/F");
  tree->Branch("jeteta1",&jeteta1_,"jeteta1/F");
  tree->Branch("jetphi1",&jetphi1_,"jetphi1/F");
@@ -378,6 +389,9 @@ void myTree::Init(){
 
 
  //---- jets
+ mjj_ = -99;
+ detajj_ = -99;
+
  jetpt1_ = -99;
  jeteta1_ = -99;
  jetphi1_ = -99;
@@ -437,7 +451,8 @@ void myTree::fillTree(std::string fileNameLHE){
   int iPartHiggs = -1;
 
   std::vector<int> finalJets ;
-  std::vector<TLorentzVector> v_tlv_quarks ;  //---- tlv = TLorentzVector
+  std::vector<TLorentzVector> v_tlv_all_quarks ;  //---- tlv = TLorentzVector
+  std::vector<TLorentzVector> v_tlv_quarks ; //---- non b-quarks
   std::vector<TLorentzVector> v_tlv_bquarks ;
   std::vector<TLorentzVector> v_tlv_leptons ;
   std::vector<TLorentzVector> v_tlv_neutrinos ;
@@ -490,12 +505,20 @@ void myTree::fillTree(std::string fileNameLHE){
 
      smearVectorKeepMass(dummy,SmearJES); //---- smear jet energy scale
 
-     v_tlv_quarks.push_back (dummy) ;
+     if (abs (reader.hepeup.IDUP.at (iPart)) != 5) {
+      //---- set massless quarks!
+      setMassLess(dummy);
+     }
 
+     v_tlv_all_quarks.push_back (dummy) ;
 
      if (abs (reader.hepeup.IDUP.at (iPart)) == 5) {
       v_tlv_bquarks.push_back (dummy) ;
      }
+     else {
+      v_tlv_quarks.push_back (dummy) ;
+     }
+
     } // quarks
     else if (abs (reader.hepeup.IDUP.at (iPart)) == 11 || abs (reader.hepeup.IDUP.at (iPart)) == 13 || abs (reader.hepeup.IDUP.at (iPart)) == 15) {  // e = 11,   mu = 13,   tau = 15
      TLorentzVector dummy (
@@ -530,6 +553,7 @@ void myTree::fillTree(std::string fileNameLHE){
   } // loop over particles in the event
 
   // sorting in pt
+  sort (v_tlv_all_quarks.rbegin (), v_tlv_all_quarks.rend (), ptsort ()) ;
   sort (v_tlv_quarks.rbegin (), v_tlv_quarks.rend (), ptsort ()) ;
   sort (v_tlv_leptons.rbegin (), v_tlv_leptons.rend (), ptsort ()) ;
   sort (v_p_leptons.rbegin (),  v_p_leptons.rend (),  ptsort ()) ;
@@ -551,6 +575,9 @@ void myTree::fillTree(std::string fileNameLHE){
    jeteta2_ = v_tlv_quarks.at (1).Eta ();
    jetphi2_ = v_tlv_quarks.at (1).Phi ();
    jetmass2_ = v_tlv_quarks.at (1).M ();
+
+   mjj_ = (v_tlv_quarks.at (0) + v_tlv_quarks.at (1) ).M();
+   detajj_ = fabs (v_tlv_quarks.at (0).Eta() - v_tlv_quarks.at (1).Eta() );
   }
 
   if (v_tlv_quarks.size()>2) {
