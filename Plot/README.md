@@ -33,5 +33,7 @@ to distinguish signal vs background
 
     r99t Plot/DrawHHnonResonant.cxx\(\"hww_mt\",100,0,300\)
     r99t Plot/DrawHHnonResonant.cxx\(\"mll\",100,0,200\)
+    r99t Plot/DrawHHnonResonant.cxx\(\"mjj\",50,0,5000\)
+    r99t Plot/DrawHHnonResonant.cxx\(\"detajj\",10,0,10\)
 
 
