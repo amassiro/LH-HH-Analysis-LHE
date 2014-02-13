@@ -18,3 +18,20 @@ hww specific
     r99t Plot/Draw.cxx\(\"mll\",100,0,200\)
 
 
+
+
+
+Non Resonant
+=======
+
+to distinguish between different signal hypotheses
+
+    r99t Plot/DrawHHnonResonant.cxx\(\"xhh_ww_mt\",100,0,2000\)
+    r99t Plot/DrawHHnonResonant.cxx\(\"xhh_m_ww_m\",100,0,2000\)
+
+to distinguish signal vs background
+
+    r99t Plot/DrawHHnonResonant.cxx\(\"hww_mt\",100,0,300\)
+    r99t Plot/DrawHHnonResonant.cxx\(\"mll\",100,0,200\)
+
+

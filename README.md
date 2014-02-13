@@ -80,3 +80,19 @@ without vbf cuts
 
 
 
+
+Signals HH non-resonant
+=======
+
+    wget  http://wwwteor.mi.infn.it/~rojo/Events_hhvbf.tgz
+    ls /tmp/amassiro/vbfhh/Events_2b2w2j/13tev/parton/*.lhe  | tr "." " "  | awk '{print "./ntupleMaker.exe  "$1".lhe     "$1".root"}'
+
+
+
+Signals HH resonant
+=======
+
+    
+    ./ntupleMaker.exe    /tmp/amassiro/MGraviton_1000_H35H25_WWbb.lhe    /tmp/amassiro/MGraviton_1000_H35H25_WWbb.root
+
+
