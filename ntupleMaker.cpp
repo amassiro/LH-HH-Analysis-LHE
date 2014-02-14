@@ -199,6 +199,8 @@ class myTree {
   float mll_;
   float ptll_;
 
+  float m_llbb_  ;
+
   float xhh_m_ww_pt_  ;
   float xhh_m_ww_eta_ ;
   float xhh_m_ww_phi_ ;
@@ -253,6 +255,7 @@ myTree::myTree(){
 
  tree->Branch("mll",&mll_,"mll/F");
  tree->Branch("ptll",&ptll_,"ptll/F");
+ tree->Branch("m_llbb",&m_llbb_,"m_llbb/F");
 
  tree->Branch("hww_gen_pt",&hww_gen_pt_,"hww_gen_pt/F");
  tree->Branch("hww_gen_eta",&hww_gen_eta_,"hww_gen_eta/F");
@@ -358,6 +361,7 @@ void myTree::Init(){
  hww_eta_p_ = -99;
  hww_gen_phi_ = -99;
 
+ m_llbb_ = -99;
  mll_ = -99;
  ptll_ = -99;
  met_pt_ = -99;
@@ -749,6 +753,7 @@ void myTree::fillTree(std::string fileNameLHE){
    //--- transverse mass
    if (v_tlv_bquarks.size()>1) {
 
+   m_llbb_ = (v_tlv_bquarks.at (0) + v_tlv_bquarks.at (1) + v_p_leptons.at (0) + v_p_leptons.at (1) ) .M();
    xhh_ww_mt_ = sqrt(
      (v_p_leptons.at (0).Pt() + v_p_leptons.at (1).Pt() + missingEnergy.Pt() + v_tlv_bquarks.at (0).Pt() + v_tlv_bquarks.at (1).Pt())*
      (v_p_leptons.at (0).Pt() + v_p_leptons.at (1).Pt() + missingEnergy.Pt() + v_tlv_bquarks.at (0).Pt() + v_tlv_bquarks.at (1).Pt()) - xhh.Pt()*xhh.Pt());

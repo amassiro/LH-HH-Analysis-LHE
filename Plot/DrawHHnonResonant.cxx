@@ -17,21 +17,30 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
  std::vector<std::string> vNameSigHR;
  std::vector<double> vXsecSig;
 
+//
+//  BR Hbb = 5.77E-01
+//  BR Hww = 2.15E-01
+//  BR Hwwlvlv = 1.0105e-02 = 2.15E-01*0.047 // l = e/m
+//
+//  *1000.--> fb
+//
+ double LUMI = 1000. * 1000.; //---- 1 ab
+
 
  vNameSig.push_back("/tmp/amassiro/vbfhh/Events_2b2w2j/13tev/parton/pp_hh_vbf_SM_13tev_nocuts.root");                               vNameSigHR.push_back("HH cv=1.0 c2v=1.0 c3=1.0"); 
- vXsecSig.push_back(0.00206/10000.);
+ vXsecSig.push_back(0.20088E-04/10000.); //---- pb
 
  vNameSig.push_back("/tmp/amassiro/vbfhh/Events_2b2w2j/13tev/parton/pp_hh_vbf_BSM_13tev_VBFcuts_CV_p0p5_C2V_p1p0_C3_p1p0.root");    vNameSigHR.push_back("HH cv=0.5 c2v=1.0 c3=1.0"); 
- vXsecSig.push_back(0.005848/10000.);
+ vXsecSig.push_back(0.35492E-04/10000.); //---- pb
 
  vNameSig.push_back("/tmp/amassiro/vbfhh/Events_2b2w2j/13tev/parton/pp_hh_vbf_BSM_13tev_VBFcuts_CV_p1p0_C2V_p0p0_C3_p1p0.root");    vNameSigHR.push_back("HH cv=1.0 c2v=0.0 c3=1.0"); 
- vXsecSig.push_back(0.05262/10000.);
+ vXsecSig.push_back(0.18200E-03/10000.); //---- pb
 
  vNameSig.push_back("/tmp/amassiro/vbfhh/Events_2b2w2j/13tev/parton/pp_hh_vbf_BSM_13tev_VBFcuts_CV_p1p0_C2V_p2p0_C3_p1p0.root");    vNameSigHR.push_back("HH cv=1.0 c2v=2.0 c3=1.0"); 
- vXsecSig.push_back(0.03395/10000.);
+ vXsecSig.push_back(0.10522E-03/10000.); //---- pb
 
  vNameSig.push_back("/tmp/amassiro/vbfhh/Events_2b2w2j/13tev/parton/pp_hh_vbf_BSM_13tev_VBFcuts_CV_p1p5_C2V_p1p0_C3_p1p0.root");    vNameSigHR.push_back("HH cv=1.5 c2v=1.0 c3=1.0"); 
- vXsecSig.push_back(0.2595/10000.);
+ vXsecSig.push_back(0.94832E-03/10000.); //---- pb
 
  TString name;
  for (int iSig = 0; iSig < nSig; iSig++) {
@@ -44,8 +53,8 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
  TFile* f_ttjj  = new TFile ("/tmp/amassiro/ttbbjj.root");
  TFile* f_wwbbjj  = new TFile ("/tmp/amassiro/wwbbjj.root");
 
- float ttjj_xsec = 2.0715*1000./10000.;
- float wwbbjj_xsec = 456.11*1000./10000.;
+ double ttjj_xsec = 2.0715/10000.; //---- pb
+ double wwbbjj_xsec = 456.11/10000.; //---- pb
 
  //---- trees
  TTree* t_ttjj = (TTree*) f_ttjj -> Get ("tree");
@@ -65,7 +74,20 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
 
 
 //  TString cut = Form ("jetpt1>30 && jetpt2>30 && mjj>400 && detajj>3.5");
- TString cut = Form ("1");
+//  TString cut = Form ("1");
+ TString cut = Form (" \
+   jetpt1>30 && jetpt2>30 \
+   && mjj>400 && detajj>4.0  \
+   && bjetpt1>25 && bjetpt2>25 \
+   && abs(bjeteta1)<2.5 && abs(bjeteta2)<2.5 \
+   && abs(jeteta1)<4.5 && abs(jeteta2)<4.5  \
+   && pt1>20 && pt2>10 && abs(eta1)<2.5 && abs(eta2)<2.5 \
+   && hbb_mass > 110 && hbb_mass < 140 \
+   && mll < 70 \
+   && ptll > 50 \
+   && hww_mt < 125 \
+   ");
+
  TString toDraw;
  TString weight = Form ("1");
 
@@ -74,15 +96,15 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
   toDraw = Form ("%s >> hSig_%d",var.c_str(),iSig);
 //   std::cout << "toDraw = " << toDraw.Data() << std::endl;
 
-  weight = Form ("(%s) * %f",cut.Data(),vXsecSig.at(iSig));
+  weight = Form ("(%s) * %f",cut.Data(),vXsecSig.at(iSig)*LUMI);
   t_Sig[iSig]->Draw(toDraw.Data(),weight.Data(),"goff");
  }
 
  toDraw = Form ("%s >> ttjj",var.c_str());
- weight = Form ("(%s) * %f",cut.Data(),ttjj_xsec);
+ weight = Form ("(%s) * %f",cut.Data(),ttjj_xsec*LUMI);
  t_ttjj->Draw(toDraw.Data(),weight.Data(),"goff");
  toDraw = Form ("%s >> wwbbjj",var.c_str());
- weight = Form ("(%s) * %f",cut.Data(),wwbbjj_xsec);
+ weight = Form ("(%s) * %f",cut.Data(),wwbbjj_xsec*LUMI);
  t_wwbbjj->Draw(toDraw.Data(),weight.Data(),"goff");
 
 
@@ -91,14 +113,16 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
  for (int iSig = 0; iSig < nSig; iSig++) {
   h_Sig[iSig]->SetMarkerColor (kRed+iSig);
   h_Sig[iSig]->SetLineColor   (kRed+iSig);
-  h_Sig[iSig]->SetLineWidth(2);
+  h_Sig[iSig]->SetLineWidth(3);
   h_Sig[iSig]->SetLineStyle(1+iSig);
+  h_Sig[iSig]->SetMarkerSize (0);
   h_Sig[iSig]->GetXaxis()->SetTitle(varHR.c_str());
  }
 
  h_ttjj->SetMarkerColor(kBlue);
  h_ttjj->SetLineColor(kBlue);
  h_ttjj->SetLineWidth(2);
+ h_ttjj->GetXaxis()->SetTitle(varHR.c_str());
 
  h_wwbbjj->SetMarkerColor(kGreen);
  h_wwbbjj->SetLineColor(kGreen);
@@ -131,7 +155,7 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
   h_Sig[iSig]->Draw("same");
  }
  leg->Draw();
- cn->SetGrid();
+ cnlumi->SetGrid();
 
 }
 
