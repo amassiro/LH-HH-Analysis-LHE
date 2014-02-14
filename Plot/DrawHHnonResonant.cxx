@@ -82,11 +82,13 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
    && abs(bjeteta1)<2.5 && abs(bjeteta2)<2.5 \
    && abs(jeteta1)<4.5 && abs(jeteta2)<4.5  \
    && pt1>20 && pt2>10 && abs(eta1)<2.5 && abs(eta2)<2.5 \
-   && hbb_mass > 110 && hbb_mass < 140 \
-   && mll < 70 \
-   && ptll > 50 \
-   && hww_mt < 125 \
    ");
+
+//    && hbb_mass > 110 && hbb_mass < 140 \
+//    && mll < 70 \
+//    && ptll > 50 \
+//    && hww_mt < 125 \
+
 
  TString toDraw;
  TString weight = Form ("1");

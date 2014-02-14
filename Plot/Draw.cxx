@@ -28,8 +28,8 @@ void Draw (std::string var = "hbb_mass", int NBIN = 1000, int MIN = 0, int MAX =
  double LUMI = 1000.; //---- 1 ab
 
  vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1050_ww_lvlv.root");        vNameSigHR.push_back("X 1050 GeV");   vXsecSig.push_back(9.85E-05 * 0.30 * 5.77E-01*1.0105e-02/20000.*1000.);
-//  vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 5.77E-01*1.0105e-02/20000.*1000.);
-//  vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_300_ww_lvlv.root");         vNameSigHR.push_back("X  300 GeV");   vXsecSig.push_back(9.33E-02 * 0.12 * 5.77E-01*1.0105e-02/20000.*1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 5.77E-01*1.0105e-02/20000.*1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_300_ww_lvlv.root");         vNameSigHR.push_back("X  300 GeV");   vXsecSig.push_back(9.33E-02 * 0.12 * 5.77E-01*1.0105e-02/20000.*1000.);
 
  nSig = vNameSig.size();
 
@@ -66,7 +66,23 @@ void Draw (std::string var = "hbb_mass", int NBIN = 1000, int MIN = 0, int MAX =
 
 
 //  TString cut = Form ("jetpt1>30 && jetpt2>30 && mjj>400 && detajj>3.5");
- TString cut = Form ("1");
+//  TString cut = Form ("1");
+ TString cut = Form (" \
+   jetpt1>30 && jetpt2>30 \
+   && bjetpt1>25 && bjetpt2>25 \
+   && abs(bjeteta1)<2.5 && abs(bjeteta2)<2.5 \
+   && abs(jeteta1)<4.5 && abs(jeteta2)<4.5  \
+   && pt1>20 && pt2>10 && abs(eta1)<2.5 && abs(eta2)<2.5 \
+   && hbb_mass > 110 && hbb_mass < 140 \
+   && mll < 70 \
+   && ptll > 50 \
+   && hww_mt < 125 \
+   && hbb_pt > 200 \
+   ");
+
+//  && mjj>300 && detajj>3.0  \
+
+ 
  TString toDraw;
  TString weight = Form ("1");
 

@@ -18,6 +18,9 @@ hww specific
     r99t Plot/Draw.cxx\(\"mll\",100,0,200\)
 
 
+    r99t Plot/Draw.cxx\(\"hbb_pt\",40,0,4000\)
+    r99t Plot/Draw.cxx\(\"hww_pt\",40,0,4000\)
+
 
 
 
@@ -28,7 +31,7 @@ to distinguish between different signal hypotheses
 
     r99t Plot/DrawHHnonResonant.cxx\(\"xhh_ww_mt\",40,0,2000\)
     r99t Plot/DrawHHnonResonant.cxx\(\"xhh_m_ww_m\",100,0,8000\)
-    r99t Plot/DrawHHnonResonant.cxx\(\"m_llbb\",100,0,2000\)
+    r99t Plot/DrawHHnonResonant.cxx\(\"m_llbb\",40,0,2000\)
 
 to distinguish signal vs background
 
