@@ -48,7 +48,9 @@ void Draw (std::string var = "hbb_mass", int NBIN = 1000, int MIN = 0, int MAX =
  TFile* f_ttjj  = new TFile ("/tmp/amassiro/ttbbjj_novbf.root");
  TFile* f_wwbbjj  = new TFile ("/tmp/amassiro/wwbbjj.root");
 
- double ttjj_xsec = 2.0715 * 1000./10000.;
+
+ double ttjj_xsec = 11.789 * 1000./10000.; //---> without VBF cuts
+//  double ttjj_xsec = 2.0715 * 1000./10000.;
  double wwbbjj_xsec = 456.11 * 1000./10000.;
 
  //---- trees
