@@ -27,9 +27,12 @@ void Draw (std::string var = "hbb_mass", int NBIN = 1000, int MIN = 0, int MAX =
 
  double LUMI = 1000.; //---- 1 ab
 
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1050_ww_lvlv.root");        vNameSigHR.push_back("X 1050 GeV");   vXsecSig.push_back(9.85E-05 * 0.30 * 5.77E-01*1.0105e-02/20000.*1000.);
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 5.77E-01*1.0105e-02/20000.*1000.);
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_300_ww_lvlv.root");         vNameSigHR.push_back("X  300 GeV");   vXsecSig.push_back(9.33E-02 * 0.12 * 5.77E-01*1.0105e-02/20000.*1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1450_ww_lvlv.root");        vNameSigHR.push_back("X 1450 GeV");   vXsecSig.push_back(1.68E-05 * 0.14 * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1050_ww_lvlv.root");        vNameSigHR.push_back("X 1050 GeV");   vXsecSig.push_back(9.85E-05 * 0.30 * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_300_ww_lvlv.root");         vNameSigHR.push_back("X  300 GeV");   vXsecSig.push_back(2.14E-01 * 0.02 * 5.77E-01*1.0105e-02/20000. * 1000.);
+
 
  nSig = vNameSig.size();
 
@@ -41,11 +44,12 @@ void Draw (std::string var = "hbb_mass", int NBIN = 1000, int MIN = 0, int MAX =
 
  //---- background
 
- TFile* f_ttjj  = new TFile ("/tmp/amassiro/ttbbjj.root");
+//  TFile* f_ttjj  = new TFile ("/tmp/amassiro/ttbbjj.root");
+ TFile* f_ttjj  = new TFile ("/tmp/amassiro/ttbbjj_novbf.root");
  TFile* f_wwbbjj  = new TFile ("/tmp/amassiro/wwbbjj.root");
 
- double ttjj_xsec = 2.0715*1000./10000.;
- double wwbbjj_xsec = 456.11*1000./10000.;
+ double ttjj_xsec = 2.0715 * 1000./10000.;
+ double wwbbjj_xsec = 456.11 * 1000./10000.;
 
  //---- trees
  TTree* t_ttjj = (TTree*) f_ttjj -> Get ("tree");
@@ -75,9 +79,9 @@ void Draw (std::string var = "hbb_mass", int NBIN = 1000, int MIN = 0, int MAX =
    && pt1>20 && pt2>10 && abs(eta1)<2.5 && abs(eta2)<2.5 \
    && hbb_mass > 110 && hbb_mass < 140 \
    && mll < 70 \
-   && ptll > 50 \
+   && ptll > 30 \
    && hww_mt < 125 \
-   && hbb_pt > 200 \
+   && hbb_pt > 100 \
    ");
 
 //  && mjj>300 && detajj>3.0  \

@@ -76,6 +76,8 @@ without vbf cuts
     cp  /afs/cern.ch/user/a/amassiro/public/xLHTF/hhwwbb/wwbbjj_ptb20_lvlv/wwbbjj_ptb20_llvv.lhe  /tmp/amassiro/wwbbjj_ptb20_llvv.lhe
     ./ntupleMaker.exe    /tmp/amassiro/wwbbjj_ptb20_llvv.lhe    /tmp/amassiro/wwbbjj.root
 
+    scp amassiro@cmsmi5:/data2/amassiro/Generation/MG5/MG5_aMC_v2_0_1/MY_ttjjbb_noVBFcuts/Events/run_01/unweighted_events.lhe /tmp/amassiro/ttbbjj_ptb20_novbfcuts.lhe
+    ./ntupleMaker.exe    /tmp/amassiro/ttbbjj_ptb20_novbfcuts.lhe    /tmp/amassiro/ttbbjj_novbf.root
 
 
 

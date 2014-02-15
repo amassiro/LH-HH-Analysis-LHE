@@ -15,12 +15,14 @@ hww specific
 
     r99t Plot/Draw.cxx\(\"xhh_m_ww_m\",100,0,2000\)
     r99t Plot/Draw.cxx\(\"xhh_ww_mt\",100,0,2000\)
+    r99t Plot/Draw.cxx\(\"xhh_ww_mt\",10,0,2000\)
     r99t Plot/Draw.cxx\(\"mll\",100,0,200\)
 
 
     r99t Plot/Draw.cxx\(\"hbb_pt\",40,0,4000\)
     r99t Plot/Draw.cxx\(\"hww_pt\",40,0,4000\)
 
+    r99t Plot/Draw.cxx\(\"ptll\",40,0,400\)
 
 
 
