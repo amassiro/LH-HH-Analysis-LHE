@@ -48,4 +48,6 @@ to distinguish signal vs background
     r99t Plot/DrawHHnonResonant.cxx\(\"ptll\",40,0,400\)
 
     r99t Plot/DrawHHnonResonant.cxx\(\"hbb_pt\",40,0,4000\)
+    r99t Plot/DrawHHnonResonant.cxx\(\"hbb_pt\",10,0,1000\)
+
     r99t Plot/DrawHHnonResonant.cxx\(\"hww_pt\",40,0,4000\)
