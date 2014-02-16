@@ -50,10 +50,11 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
 
  //---- background
 
- TFile* f_ttjj  = new TFile ("/tmp/amassiro/ttbbjj.root");
+ TFile* f_ttjj  = new TFile ("/tmp/amassiro/ttbbjj.root"); //---- 1M events!
  TFile* f_wwbbjj  = new TFile ("/tmp/amassiro/wwbbjj.root");
 
- double ttjj_xsec = 2.0715/10000.; //---- pb
+ double ttjj_xsec = 2.0713/1000000.; //---- pb
+//  double ttjj_xsec = 2.0715/10000.; //---- pb
  double wwbbjj_xsec = 456.11/10000.; //---- pb
 
  //---- trees
@@ -82,12 +83,12 @@ void DrawHHnonResonant (std::string var = "hbb_mass", int NBIN = 1000, int MIN =
    && abs(bjeteta1)<2.5 && abs(bjeteta2)<2.5 \
    && abs(jeteta1)<4.5 && abs(jeteta2)<4.5  \
    && pt1>20 && pt2>10 && abs(eta1)<2.5 && abs(eta2)<2.5 \
+   && hbb_mass > 110 && hbb_mass < 140 \
+   && mll < 70 \
+   && ptll > 50 \
+   && hww_mt < 125 \
    ");
 
-//    && hbb_mass > 110 && hbb_mass < 140 \
-//    && mll < 70 \
-//    && ptll > 50 \
-//    && hww_mt < 125 \
 
 
  TString toDraw;

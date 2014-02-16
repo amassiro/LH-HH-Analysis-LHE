@@ -71,6 +71,9 @@ copy lhe file:
     cp /afs/cern.ch/user/a/amassiro/public/xLHTF/hhwwbb/ttbbjj_100k/unweighted_events.lhe /tmp/amassiro/ttbbjj.lhe
     ./ntupleMaker.exe    /tmp/amassiro/ttbbjj.lhe    /tmp/amassiro/ttbbjj.root
 
+    scp amassiro@cmsmi5:/data2/amassiro/Generation/MG5/MG5_aMC_v2_0_1/MY_ttjj/Events/run_02/unweighted_events.lhe /tmp/amassiro/ttbbjj_1M.lhe
+    ./ntupleMaker.exe    /tmp/amassiro/ttbbjj_1M.lhe    /tmp/amassiro/ttbbjj.root
+
 without vbf cuts
 
     cp  /afs/cern.ch/user/a/amassiro/public/xLHTF/hhwwbb/wwbbjj_ptb20_lvlv/wwbbjj_ptb20_llvv.lhe  /tmp/amassiro/wwbbjj_ptb20_llvv.lhe
