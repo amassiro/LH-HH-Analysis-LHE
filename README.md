@@ -97,6 +97,7 @@ Signals HH non-resonant
 Signals HH resonant
 =======
 
+    ls /afs/cern.ch/work/a/acarvalh/phenoHH/model_LHEfiles/bulk_graviton/Madgraphcg0_0137_all/
     ./ntupleMaker.exe    /tmp/amassiro/MGraviton_1000_H35H25_WWbb.lhe    /tmp/amassiro/MGraviton_1000_H35H25_WWbb.root
     ls /tmp/amassiro/XHH/MGraviton_*_ww_lvlv.lhe  | tr "." " "  | awk '{print "./ntupleMaker.exe  "$1".lhe     "$1".root"}'
 
