@@ -34,6 +34,7 @@ to distinguish between different signal hypotheses
     r99t Plot/DrawHHnonResonant.cxx\(\"xhh_ww_mt\",40,0,2000\)
     r99t Plot/DrawHHnonResonant.cxx\(\"xhh_m_ww_m\",100,0,8000\)
     r99t Plot/DrawHHnonResonant.cxx\(\"m_llbb\",40,0,2000\)
+    r99t Plot/DrawHHnonResonant.cxx\(\"log\(m_llbb\)\",20,4,10\)
 
 to distinguish signal vs background
 

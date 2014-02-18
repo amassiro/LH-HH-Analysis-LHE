@@ -21,17 +21,18 @@ void Draw (std::string var = "hbb_mass", int NBIN = 1000, int MIN = 0, int MAX =
 //  BR Hbb = 5.77E-01
 //  BR Hww = 2.15E-01
 //  BR Hwwlvlv = 1.0105e-02 = 2.15E-01*0.047 // l = e/m
+// BH hh>bbww>bblvlv = 2 * 5.77E-01 *  2.15E-01 * 0.047 = 1.166e-02
 //
 //  *1000.--> fb
  //
 
  double LUMI = 1000.; //---- 1 ab
 
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1450_ww_lvlv.root");        vNameSigHR.push_back("X 1450 GeV");   vXsecSig.push_back(1.68E-05 * 0.14 * 5.77E-01*1.0105e-02/20000. * 1000.);
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1050_ww_lvlv.root");        vNameSigHR.push_back("X 1050 GeV");   vXsecSig.push_back(9.85E-05 * 0.30 * 5.77E-01*1.0105e-02/20000. * 1000.);
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 5.77E-01*1.0105e-02/20000. * 1000.);
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 5.77E-01*1.0105e-02/20000. * 1000.);
- vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_300_ww_lvlv.root");         vNameSigHR.push_back("X  300 GeV");   vXsecSig.push_back(2.14E-01 * 0.02 * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1450_ww_lvlv.root");        vNameSigHR.push_back("X 1450 GeV");   vXsecSig.push_back(1.68E-05 * 0.14 * 2. * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_1050_ww_lvlv.root");        vNameSigHR.push_back("X 1050 GeV");   vXsecSig.push_back(9.85E-05 * 0.30 * 2. * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 2. * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_850_ww_lvlv.root");         vNameSigHR.push_back("X  850 GeV");   vXsecSig.push_back(3.00E-04 * 0.35 * 2. * 5.77E-01*1.0105e-02/20000. * 1000.);
+ vNameSig.push_back("/tmp/amassiro/XHH/MGraviton_300_ww_lvlv.root");         vNameSigHR.push_back("X  300 GeV");   vXsecSig.push_back(2.14E-01 * 0.02 * 2. * 5.77E-01*1.0105e-02/20000. * 1000.);
 
 
  nSig = vNameSig.size();
